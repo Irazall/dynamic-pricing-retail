@@ -1,0 +1,24 @@
+version: "3.8"
+
+#
+# [ volumes definition ]
+#
+# creates Docker volumes which can be mounted by other containers too e.g. for backup
+#
+volumes:
+    mongo_data:
+        driver: local
+        
+services:
+    mongodb:
+        image : mongo
+        container_name: mongodb_dynamic_pricing
+        volumes:
+            - mongo_data:/data/db
+        deploy:
+            resources:
+                limits:
+                    memory: 1024M
+        ports:
+            - 27017:27017
+        restart: unless-stopped
